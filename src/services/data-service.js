@@ -23,6 +23,14 @@ export default class DataService {
         })      
     }
 
+    getBookFromID(id){
+        return this.getBooksData().then(books => {
+            const booksClone = books.slice();
+            const chosenBook = booksClone.find(obj => obj.id === id);
+            return chosenBook;
+        })      
+    }
+
     createBooksFromRawData(data) {
         const books = [];
         for (let i = 0; i < data.length; i++) {
@@ -33,7 +41,7 @@ export default class DataService {
                 const newAuthor = new Author(author.name, author.birth_year, author.death_year);
                 authorArray.push(newAuthor);
             }
-            const newBook = new Book(element.title, authorArray, element.summaries[0], element.subjects, element.formats["image/jpeg"]);
+            const newBook = new Book(element.title, authorArray, element.summaries[0], element.subjects, element.formats["image/jpeg"], element.id);
             books.push(newBook);
         }
         return books;
